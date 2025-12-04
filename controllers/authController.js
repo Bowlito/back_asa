@@ -39,11 +39,18 @@ export const login = async (req, res) => {
             token,
             user: {
                 id: user._id,
+                firstname: user.firstname,
+                lastname: user.lastname,
                 email: user.email,
                 role: user.role,
             },
         });
+        console.log(user);
     } catch (error) {
+        console.log("LOGIN ECHOUWAYYY : ", error);
+
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
+

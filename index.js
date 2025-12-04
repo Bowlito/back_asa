@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js"
 import authRoutes from "./routes/authRoute.js"
+import adherentRoutes from "./routes/adherentRoute.js"
 
 dotenv.config();
 
@@ -25,7 +26,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/adherents", adherentRoutes)
 
 const PORT = process.env.PORT || 5000;
 

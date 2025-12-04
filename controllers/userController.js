@@ -8,6 +8,8 @@ export const getUsers = async (req, res) => {
         
         res.json(users);
     } catch (error) {
+        console.log("ERREUR GETUSER: ", error );
+        
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
@@ -42,7 +44,7 @@ export const createUser = async (req, res) => {
         res.status(200).json(newUser);
     } catch (error) {
 
-        console.log("erreur serveur : ", error);
+        console.log("REGISTER ECHOUWAYYY : ", error);
         
         res.status(500).json({ message: "Erreur serveur" });
     }

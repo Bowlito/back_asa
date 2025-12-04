@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-export const auth = (req, res, next) => {
+export const protect = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
 
@@ -10,15 +11,24 @@ export const auth = (req, res, next) => {
 
         const token = authHeader.split(" ")[1];
 
-        console.log(token);
-        
-
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        req.user = decoded;
+        req.user = await User.findById(decoded._id).select("-hashedPassword");
 
         next();
     } catch (error) {
         return res.status(401).json({ message: "Token invalide" });
     }
+};
+
+export const authorize = (...roles) => {
+    return (req, res, next) => {
+        if (!req.user) {
+            return res.status(401).json({ message: "Non authentifié" });
+        }
+
+        if(!roles.includes(req.user.role)){
+            return res.status(403).json({ message: "Accès refusé" });
+        }
+    };
 };
